@@ -12,4 +12,20 @@ addButtonElement.onclick = function () {
   addListElement.appendChild(span);
   myToDoListElement.appendChild(addListElement);
   inputValueElement.value = "";
+
+  //create mark button
+  const markButton = document.createElement("button");
+  markButton.innerHTML = "✔";
+  span.appendChild(markButton);
+
+  // //solusion 1(not working)
+  // const markButtonClick = markButton;
+  // markButtonClick.addEventListener.textDecoration = "line-through";
+  // //solusion 2(always working)
+  // markButton.onclick = myToDoListElement.style.textDecoration = "line-through";
+
+  // create delete button
+  const deleteButton = document.createElement("button");
+  deleteButton.innerHTML = "❌";
+  span.appendChild(deleteButton);
 };
