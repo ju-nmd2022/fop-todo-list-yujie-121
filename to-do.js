@@ -1,32 +1,45 @@
-const addButtonElement = document.getElementById("add-button");
-const inputValueElement = document.getElementById("input-field");
-const myToDoListElement = document.getElementById("myToDoList");
+let addButtonElement;
+let inputValueElement;
+let myToDoListElement;
 
 let toDoList = [];
 
-addButtonElement.onclick = function () {
-  if (inputValueElement.value.length > 0) {
-    const listContainerElement = document.createElement("div");
-    const li = document.createElement("li");
-    const toDoText = document.createTextNode(inputValueElement.value);
-    li.appendChild(toDoText);
-    listContainerElement.appendChild(li);
-    myToDoListElement.appendChild(listContainerElement);
-    inputValueElement.value = "";
+function onLoadHandler() {
+  addButtonElement = document.getElementById("add-button");
+  inputValueElement = document.getElementById("input-field");
+  myToDoListElement = document.getElementById("myToDoList");
 
-    //create mark button
-    const markButton = document.createElement("button");
-    markButton.innerHTML = "✔️";
-    markButton.onclick = markElement;
-    listContainerElement.appendChild(markButton);
+  addButtonElement.addEventListener("click", addToDoItemElement);
 
-    //create delet button
-    const deleteButton = document.createElement("button");
-    deleteButton.innerHTML = "✖️";
-    deleteButton.onclick = removeElement;
-    listContainerElement.appendChild(deleteButton);
+  function addToDoItemElement() {
+    if (inputValueElement.value.length > 0) {
+      const listContainerElement = document.createElement("div");
+      const li = document.createElement("li");
+      const toDoText = document.createTextNode(inputValueElement.value);
+      li.appendChild(toDoText);
+      listContainerElement.appendChild(li);
+      myToDoListElement.appendChild(listContainerElement);
+      inputValueElement.value = "";
+
+      //create mark button
+      const markButton = document.createElement("button");
+      markButton.innerHTML = "✔️";
+      markButton.addEventListener("click", markElement);
+      listContainerElement.appendChild(markButton);
+
+      //create delete button
+      const deleteButton = document.createElement("button");
+      deleteButton.innerHTML = "❌";
+      deleteButton.addEventListener("click", removeElement);
+      listContainerElement.appendChild(deleteButton);
+    }
   }
-};
+}
+
+function cleanElement() {
+  const element = this.parentNode;
+  element.style.textDecoration = "none";
+}
 
 function markElement() {
   const element = this.parentNode;
@@ -38,23 +51,4 @@ function removeElement() {
   element.parentNode.removeChild(element);
 }
 
-// addButtonElement.onclick = function () {
-//   if (inputValueElement.value.length > 0) {
-//     const addListElement = document.createElement("li");
-//     const span = document.createElement("span");
-//     const text = document.createTextNode(inputValueElement.value);
-//     span.appendChild(text);
-//     addListElement.appendChild(span);
-//     myToDoListElement.appendChild(addListElement);
-//     inputValueElement.value = "";
-
-//     //create mark button
-//     const markButton = document.createElement("button");
-//     markButton.innerHTML = "✔️";
-
-//     span.appendChild(markButton);
-//     const deleteButton = document.createElement("button");
-//     deleteButton.innerHTML = "✖️";
-//     span.appendChild(deleteButton);
-//   }
-// };
+window.addEventListener("load", onLoadHandler);
