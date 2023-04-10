@@ -11,10 +11,9 @@ function onLoadHandler() {
 
   addButtonElement.addEventListener("click", addToDoItemElement);
 
-  const saveButton = document.getElementById("add-button");
-  saveButton.addEventListener("click", function () {
-    saveToDoLists();
-  });
+  const storedToDoList = localStorage.getItem("toDoList");
+
+  storedToDoList;
 
   function addToDoItemElement() {
     if (inputValueElement.value.length > 0) {
@@ -25,7 +24,6 @@ function onLoadHandler() {
       listContainerElement.appendChild(li);
       myToDoListElement.appendChild(listContainerElement);
       inputValueElement.value = "";
-      localStorage.item = inputValueElement.value;
 
       //create mark button
       const markButton = document.createElement("button");
@@ -38,13 +36,10 @@ function onLoadHandler() {
       deleteButton.innerHTML = "❌";
       deleteButton.addEventListener("click", removeElement);
       listContainerElement.appendChild(deleteButton);
+
+      saveToDoLists();
     }
   }
-}
-
-function cleanElement() {
-  const element = this.parentNode;
-  element.style.textDecoration = "none";
 }
 
 function markElement() {
@@ -59,7 +54,7 @@ function removeElement() {
 
 function saveToDoLists() {
   let listItem = {
-    item: "undefined",
+    item: inputValueElement.value,
   };
   if (localStorage.listItem === undefined) {
     localStorage.listItem = JSON.stringify([]);
