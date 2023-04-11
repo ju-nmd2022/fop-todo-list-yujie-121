@@ -16,6 +16,7 @@ function onLoadHandler() {
     toDoList = JSON.parse(localStorage.getItem("toDoList"));
     renderToDoList();
   }
+
   function addToDoItemElement() {
     if (inputValueElement.value.length > 0) {
       const toDoText = inputValueElement.value;
@@ -50,12 +51,14 @@ function onLoadHandler() {
       deleteButton.innerHTML = "❌";
       deleteButton.addEventListener("click", () => removeElement(index));
       listContainerElement.appendChild(deleteButton);
-      // Mark item if it was marked previously
+
+      // Mark item if it was marked before
       if (item.isMarked) {
         li.style.textDecoration = "line-through";
       }
     });
   }
+
   function markElement(index) {
     const element = myToDoListElement.children[index];
     const item = toDoList[index];
@@ -63,6 +66,7 @@ function onLoadHandler() {
     element.style.textDecoration = item.isMarked ? "line-through" : "none";
     saveToDoListToLocalStorage();
   }
+  //"!" if to change the true or false; "?" is for the "line-through" or "none"
 
   function removeElement(index) {
     toDoList.splice(index, 1);
