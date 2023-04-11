@@ -59,6 +59,9 @@ function onLoadHandler() {
     });
   }
 
+  // the markElement solution was asked help from chatGTP,
+  // cuz I want to make the mark function can be reversible, but don't know how to structure that
+
   function markElement(index) {
     const element = myToDoListElement.children[index];
     const item = toDoList[index];
@@ -66,7 +69,7 @@ function onLoadHandler() {
     element.style.textDecoration = item.isMarked ? "line-through" : "none";
     saveToDoListToLocalStorage();
   }
-  //"!" if to change the true or false; "?" is for the "line-through" or "none"
+  //"!" if to change the true or false; "?" is for the "line-through" or "none", then it is reversible
 
   function removeElement(index) {
     toDoList.splice(index, 1);
