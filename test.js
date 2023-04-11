@@ -16,6 +16,16 @@ function onLoadHandler() {
     toDoList = JSON.parse(localStorage.getItem("toDoList"));
     renderToDoList();
   }
+  function addToDoItemElement() {
+    if (inputValueElement.value.length > 0) {
+      const toDoText = inputValueElement.value;
+      toDoList.push({ text: toDoText, isMarked: false });
+      renderToDoList();
+      inputValueElement.value = "";
+
+      saveToDoListToLocalStorage();
+    }
+  }
 
   function renderToDoList() {
     // If no this code will get the items back again
@@ -24,7 +34,7 @@ function onLoadHandler() {
     toDoList.forEach((item, index) => {
       const listContainerElement = document.createElement("div");
       const li = document.createElement("li");
-      const toDoText = document.createTextNode(item);
+      const toDoText = document.createTextNode(item.text);
       li.appendChild(toDoText);
       listContainerElement.appendChild(li);
       myToDoListElement.appendChild(listContainerElement);
@@ -40,27 +50,17 @@ function onLoadHandler() {
       deleteButton.innerHTML = "❌";
       deleteButton.addEventListener("click", () => removeElement(index));
       listContainerElement.appendChild(deleteButton);
+      // Mark item if it was marked previously
+      if (item.isMarked) {
+        li.style.textDecoration = "line-through";
+      }
     });
   }
-
-  function addToDoItemElement() {
-    if (inputValueElement.value.length > 0) {
-      const toDoText = inputValueElement.value;
-      toDoList.push(toDoText);
-      renderToDoList();
-      inputValueElement.value = "";
-
-      saveToDoListToLocalStorage();
-    }
-  }
-
-  function saveToDoListToLocalStorage() {
-    localStorage.setItem("toDoList", JSON.stringify(toDoList));
-  }
-
   function markElement(index) {
     const element = myToDoListElement.children[index];
-    element.style.textDecoration = "line-through";
+    const item = toDoList[index];
+    item.isMarked = !item.isMarked;
+    element.style.textDecoration = item.isMarked ? "line-through" : "none";
     saveToDoListToLocalStorage();
   }
 
@@ -68,6 +68,9 @@ function onLoadHandler() {
     toDoList.splice(index, 1);
     renderToDoList();
     saveToDoListToLocalStorage();
+  }
+  function saveToDoListToLocalStorage() {
+    localStorage.setItem("toDoList", JSON.stringify(toDoList));
   }
 }
 
@@ -77,4 +80,4 @@ window.addEventListener("load", onLoadHandler);
 
 //In my code, the forEach() method is being used to iterate over the toDoList array and render each to-do item on the screen.
 //The provided function takes two parameters: item and index. item refers to the current element being processed
-//Which is an object that contains the text and state(marked or not) of a to-do item. index refers to the index of the current element in the array.
+//Which is an object that contains the text and state(marked or not) of a to-do item. index refers to the index of the current element in the array
